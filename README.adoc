@@ -1,0 +1,56 @@
+= Capsium Core (WASM)
+
+The Capsium package model compiled to a single WASM library. Every
+host reactor — Ruby, Lua, JS, Python, Go, Rust — links this one
+artifact so the parsing / integrity / route-resolution semantics
+are identical everywhere.
+
+== Why
+
+Today every reactor re-implements the package model in its host
+language:
+
+- `capsium/lib/capsium/package/*.rb` (Ruby)
+- `capsium-js/packages/core/src/` (TypeScript)
+- `capsium-lua/lua/capsium/package/` (Lua)
+
+That's 3× the surface area for drift and bugs. `capsium-core` (this
+crate) is the single source of truth. Host bindings become thin
+shims that load the WASM module and call its functions.
+
+== Status
+
+**Scaffold.** The Rust types mirror the Ruby model:
+
+- `Metadata` — metadata.json (CC 62001 §2)
+- `Manifest` — manifest.json (§3)
+- `Routes` + `Route` + `RouteKind` — routes.json (§4)
+- `Storage` + `DatasetConfig` — storage.json (§5)
+- `Security` + `IntegrityReport` + `IntegrityIssue` — security.json (§6)
+- `Package` — facade that loads from a `{path -> bytes}` map
+- `sha256_hex`, `checksum_files` — pack-time helpers
+
+What's NOT here yet (TODO 40 follow-ups):
+
+- `wasm-bindgen` exports for browser/Node consumption
+- Ruby gem wrapping via `wasmtime-rb`
+- Python package via `wasmtime-py`
+- Migration plan for `capsium/lib/capsium/package/*` to delegate
+  to this crate
+- Conformance kit adapter (every binding runs the kit, gets the
+  same answer)
+
+== Build
+
+[source,sh]
+----
+cargo build --release
+cargo test
+----
+
+The crate builds to `rlib` (for host-Rust use) and `cdylib` (for
+WASM consumption via `wasm-pack build --target web`).
+
+== License
+
+MIT.
