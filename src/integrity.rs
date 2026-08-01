@@ -15,5 +15,8 @@ pub fn sha256_hex(bytes: &[u8]) -> String {
 /// Hash every file into a `{ path -> sha256_hex }` map. Used at
 /// pack time to build security.json deterministically.
 pub fn checksum_files(files: &BTreeMap<String, Vec<u8>>) -> BTreeMap<String, String> {
-    files.iter().map(|(k, v)| (k.clone(), sha256_hex(v))).collect()
+    files
+        .iter()
+        .map(|(k, v)| (k.clone(), sha256_hex(v)))
+        .collect()
 }

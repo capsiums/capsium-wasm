@@ -2,8 +2,8 @@
 //! MIME type and visibility. Auto-generated at pack time; reactors
 //! read it to know what to serve.
 
-use std::collections::BTreeMap;
 use serde::{Deserialize, Serialize};
+use std::collections::BTreeMap;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Manifest {

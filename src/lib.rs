@@ -8,13 +8,16 @@
 
 #![forbid(unsafe_code)]
 
+pub mod integrity;
 pub mod manifest;
 pub mod metadata;
 pub mod package;
 pub mod routes;
 pub mod security;
 pub mod storage;
-pub mod integrity;
+
+#[cfg(feature = "wasm")]
+pub mod wasm;
 
 pub use manifest::{Manifest, ManifestResource};
 pub use metadata::Metadata;

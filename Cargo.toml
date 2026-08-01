@@ -15,8 +15,19 @@ serde_json = "1"
 sha2 = "0.10"
 thiserror = "1"
 
+# WASM bindings (optional so the rlib builds without them when a host
+# links capsium-core directly as a Rust crate). Enabled via the
+# `wasm` feature for `wasm-pack build --target web`.
+wasm-bindgen = { version = "0.2", optional = true }
+serde-wasm-bindgen = { version = "0.6", optional = true }
+
+[features]
+default = []
+wasm = ["dep:wasm-bindgen", "dep:serde-wasm-bindgen"]
+
 [dev-dependencies]
 wasm-bindgen-test = "0.2"
+js-sys = "0.3"
 
 [profile.release]
 opt-level = "s"

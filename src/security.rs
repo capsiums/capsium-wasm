@@ -2,8 +2,8 @@
 //! A reactor MUST verify checksums at activation and refuse on
 //! mismatch.
 
-use std::collections::BTreeMap;
 use serde::{Deserialize, Serialize};
+use std::collections::BTreeMap;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Security {
@@ -37,9 +37,17 @@ pub struct DigitalSignatures {
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum IntegrityIssue {
-    Missing { path: String },
-    Mismatch { path: String, expected: String, actual: String },
-    Unchecked { path: String },
+    Missing {
+        path: String,
+    },
+    Mismatch {
+        path: String,
+        expected: String,
+        actual: String,
+    },
+    Unchecked {
+        path: String,
+    },
 }
 
 #[derive(Debug, Clone)]
@@ -61,13 +69,14 @@ impl Security {
     /// Verify every declared checksum against the provided files map.
     /// Returns a report listing every issue (missing file, mismatch,
     /// unchecked). Empty issues = valid.
-    pub fn verify(
-        &self,
-        files: &BTreeMap<String, Vec<u8>>,
-    ) -> IntegrityReport {
+    pub fn verify(&self, files: &BTreeMap<String, Vec<u8>>) -> IntegrityReport {
         use sha2::{Digest, Sha256};
         let mut issues = Vec::new();
-        let checksums = match self.security.as_ref().and_then(|s| s.integrity_checks.as_ref()) {
+        let checksums = match self
+            .security
+            .as_ref()
+            .and_then(|s| s.integrity_checks.as_ref())
+        {
             Some(c) => &c.checksums,
             None => return IntegrityReport { issues },
         };
