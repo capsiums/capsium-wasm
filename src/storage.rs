@@ -1,8 +1,8 @@
 //! storage.json model (CC 62001 §5). Declares the datasets a
 //! package exposes (the source file, optional schema).
 
-use std::collections::BTreeMap;
 use serde::{Deserialize, Serialize};
+use std::collections::BTreeMap;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Storage {

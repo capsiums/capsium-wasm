@@ -28,6 +28,9 @@ fn main() {
     files.insert("content/index.html".to_string(), b"<h1>nope</h1>".to_vec());
     let bad = security.verify(&files);
     println!("after tamper:    {} issues", bad.issues.len());
-    assert!(bad.issues.iter().any(|i| matches!(i, IntegrityIssue::Mismatch { .. })));
+    assert!(bad
+        .issues
+        .iter()
+        .any(|i| matches!(i, IntegrityIssue::Mismatch { .. })));
     println!("OK — mismatch detected");
 }

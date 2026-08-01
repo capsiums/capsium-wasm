@@ -49,6 +49,13 @@ impl Package {
             .get("security.json")
             .and_then(|b| Security::from_json(&String::from_utf8_lossy(b)).ok());
 
-        Ok(Self { metadata, manifest, routes, storage, security, files })
+        Ok(Self {
+            metadata,
+            manifest,
+            routes,
+            storage,
+            security,
+            files,
+        })
     }
 }
