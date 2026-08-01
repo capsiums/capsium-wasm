@@ -26,7 +26,7 @@ default = []
 wasm = ["dep:wasm-bindgen", "dep:serde-wasm-bindgen"]
 
 [dev-dependencies]
-wasm-bindgen-test = "0.2"
+wasm-bindgen-test = "0.3"
 js-sys = "0.3"
 
 [profile.release]
