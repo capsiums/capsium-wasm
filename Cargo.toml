@@ -18,7 +18,7 @@ thiserror = "1"
 # WASM bindings (optional so the rlib builds without them when a host
 # links capsium-core directly as a Rust crate). Enabled via the
 # `wasm` feature for `wasm-pack build --target web`.
-wasm-bindgen = { version = "0.2", optional = true }
+wasm-bindgen = { version = "0.2.88", optional = true }
 serde-wasm-bindgen = { version = "0.6", optional = true }
 
 [features]
